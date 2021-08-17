@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import ImageSlider from './ImageSlider';
 
 const Home = () => {
-	return <Container>Home</Container>;
+	return (
+		<Container>
+			<ImageSlider />
+		</Container>
+	);
 };
 
 export default Home;
