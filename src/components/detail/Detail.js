@@ -1,49 +1,67 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { CircularProgress } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import db from '../../firebase';
 
 const Detail = () => {
+	const { id } = useParams();
+	const [movie, setMovie] = useState();
+
+	useEffect(() => {
+		db.collection('movies')
+			.doc(id)
+			.get()
+			.then(doc => {
+				if (doc.exists) {
+					setMovie(doc.data());
+				} else {
+					// Go back home
+					console.log('doesnt exist');
+				}
+			});
+	}, [id]);
+
 	return (
 		<Container>
-			<Background>
-				<img
-					src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1920&aspectRatio=1.78&format=jpeg"
-					alt=""
-				/>
-			</Background>
-			<ImageTitle>
-				<img
-					src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1344&aspectRatio=1.78&format=png"
-					alt=""
-				/>
-			</ImageTitle>
+			{!movie ? (
+				<Spinner>
+					<CircularProgress />
+				</Spinner>
+			) : (
+				<Fragment>
+					<Background>
+						<img src={movie.backgroundImg} alt="" />
+					</Background>
+					<ImageTitle>
+						<img src={movie.titleImg} alt="" />
+					</ImageTitle>
 
-			<Controls>
-				<PlayButton>
-					<img src="/images/play-icon-black.png" alt="" />
-					<span>PLAY</span>
-				</PlayButton>
+					<Controls>
+						<PlayButton>
+							<img src="/images/play-icon-black.png" alt="" />
+							<span>PLAY</span>
+						</PlayButton>
 
-				<TrailerButton>
-					<img src="/images/play-icon-white.png" alt="" />
-					<span>TRAILER</span>
-				</TrailerButton>
+						<TrailerButton>
+							<img src="/images/play-icon-white.png" alt="" />
+							<span>TRAILER</span>
+						</TrailerButton>
 
-				<AddButton>
-					<span>+</span>
-				</AddButton>
+						<AddButton>
+							<span>+</span>
+						</AddButton>
 
-				<GroupWatchButton>
-					<img src="/images/group-icon.png" alt="" />
-				</GroupWatchButton>
-			</Controls>
+						<GroupWatchButton>
+							<img src="/images/group-icon.png" alt="" />
+						</GroupWatchButton>
+					</Controls>
 
-			<SubTitle>2018 * 7m * Family, Fantasy, Kids, Animation</SubTitle>
+					<SubTitle>{movie.subTitle}</SubTitle>
 
-			<Description>
-				A chinese mom who's sad when her grown son leaves home gets another
-				chance at motherhood when one of her dumplings springs to life. But she
-				finds that nothing stays cute and small forever.
-			</Description>
+					<Description>{movie.description}</Description>
+				</Fragment>
+			)}
 		</Container>
 	);
 };
@@ -149,4 +167,11 @@ const Description = styled.div`
 	margin-top: 16px;
 	color: rgb(249, 249, 249);
 	max-width: 760px;
+`;
+
+const Spinner = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 200px;
 `;
