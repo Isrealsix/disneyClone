@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Movies from '../movies/Movies';
 import Viewers from '../viewers/Viewers';
 import ImageSlider from './ImageSlider';
 
@@ -8,6 +9,7 @@ const Home = () => {
 		<Container>
 			<ImageSlider />
 			<Viewers />
+			<Movies />
 		</Container>
 	);
 };
