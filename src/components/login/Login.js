@@ -82,4 +82,6 @@ const Description = styled.p`
 	line-height: 1.5;
 `;
 
-const CTALogoTwo = styled.img``;
+const CTALogoTwo = styled.img`
+	width: 100%;
+`;
