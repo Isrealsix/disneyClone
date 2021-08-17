@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+// Mine;
 const firebaseConfig = {
 	apiKey: 'AIzaSyDzKHrPH5ZaJ2FGcDDLME-dySt6hW8NsvM',
 	authDomain: 'disney-28ffe.firebaseapp.com',
